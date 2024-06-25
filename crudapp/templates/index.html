@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/index.css' %}" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Note Task</h1>
+      <form method="post">
+        {% csrf_token %}
+        <input type="text" name="task" placeholder="Enter your task" />
+        <input type="submit" value="Add Task" />
+      </form>
+      <hr />
+      {% if messages %}
+        {% for message in messages %}
+          <h3>{{ message }}</h3>
+        {% endfor %}
+      {% endif %}
+      {% for note in notes %}
+        <ul>
+          <li>
+            {{ note.task }}
+            <span>
+              <a href="{% url 'update_note' note.id %}">Update</a>
+              <a href="{% url 'delete_note' note.id %}">Delete</a>
+            </span>
+          </li>
+        </ul>
+      {% endfor %}
+    </div>
+  </body>
+</html>
